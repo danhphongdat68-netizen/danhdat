@@ -1,65 +1,108 @@
-<!DOCTYPE html>
-<html lang="vi">
-<head>
-  <meta charset="UTF-8">
-  <title>Quản lý môn học</title>
-  <style>
-    body {
-      font-family: Arial;
-      background: #f4f6f8;
-      padding: 20px;
-    }
-    h1 {
-      text-align: center;
-    }
-    input, button {
-      padding: 8px;
-      margin: 5px;
-    }
-    ul {
-      max-width: 400px;
-      margin: auto;
-      padding: 0;
-    }
-    li {
-      list-style: none;
-      background: white;
-      margin: 5px 0;
-      padding: 10px;
-      display: flex;
-      justify-content: space-between;
-      border-radius: 5px;
-    }
-    button {
-      cursor: pointer;
-    }
-  </style>
-</head>
-<body>
+// Lưu
+localStorage.setItem("monHoc", JSON.stringify(monHocList));
 
-<h1>📚 Quản lý môn học</h1>
+// Lấy ra
+let monHocList = JSON.parse(localStorage.getItem("monHoc")) || [];
+let monHocList = [
+  { ten: "Toán" },
+  { ten: "Ngữ văn" },
+  { ten: "Tiếng Anh" }
+];
+function themMon() {
+  const ten = document.getElementById("monHoc").value.trim();
+  if (ten === "") return;
 
-<div style="text-align:center;">
-  <input type="text" id="monHoc" placeholder="Nhập tên môn học">
+  monHocList.push({ ten: ten });
+  luuVaHienThi();
+}
+function suaMon(index) {
+  const tenMoi = prompt("Nhập tên môn mới:", monHocList[index].ten);
+  if (tenMoi) {
+    monHocList[index].ten = tenMoi;
+    luuVaHienThi();
+  }
+}
+function luuVaHienThi() {
+  localStorage.setItem("monHoc", JSON.stringify(monHocList));
+  hienThi();
+}
+body {
+  font-family: Arial;
+  background: linear-gradient(120deg, #74ebd5, #acb6e5);
+  min-height: 100vh;
+}
+.container {
+  background: white;
+  max-width: 500px;
+  margin: 50px auto;
+  padding: 20px;
+  border-radius: 10px;
+}
+li {
+  display: flex;
+  justify-content: space-between;
+  margin: 8px 0;
+}
+button {
+  border: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+}
+<div class="container">
+  <h2>📚 Quản lý môn học</h2>
+  <input id="monHoc" placeholder="Nhập tên môn">
   <button onclick="themMon()">Thêm</button>
+  <ul id="list"></ul>
 </div>
 
-<ul id="danhSach"></ul>
-
 <script>
-  function themMon() {
-    const ten = document.getElementById("monHoc").value;
-    if (ten === "") return;
+let monHocList = JSON.parse(localStorage.getItem("monHoc")) || [
+  { ten: "Toán" },
+  { ten: "Ngữ văn" },
+  { ten: "Tiếng Anh" }
+];
 
-    const li = document.createElement("li");
-    li.innerHTML = `
-      ${ten}
-      <button onclick="this.parentElement.remove()">Xóa</button>
+function hienThi() {
+  const ul = document.getElementById("list");
+  ul.innerHTML = "";
+  monHocList.forEach((m, i) => {
+    ul.innerHTML += `
+      <li>
+        ${m.ten}
+        <span>
+          <button onclick="suaMon(${i})">Sửa</button>
+          <button onclick="xoaMon(${i})">Xóa</button>
+        </span>
+      </li>
     `;
-    document.getElementById("danhSach").appendChild(li);
-    document.getElementById("monHoc").value = "";
-  }
-</script>
+  });
+}
 
-</body>
-</html>
+function themMon() {
+  const ten = document.getElementById("monHoc").value.trim();
+  if (!ten) return;
+  monHocList.push({ ten });
+  document.getElementById("monHoc").value = "";
+  luuVaHienThi();
+}
+
+function xoaMon(i) {
+  monHocList.splice(i, 1);
+  luuVaHienThi();
+}
+
+function suaMon(i) {
+  const moi = prompt("Tên môn mới:", monHocList[i].ten);
+  if (moi) {
+    monHocList[i].ten = moi;
+    luuVaHienThi();
+  }
+}
+
+function luuVaHienThi() {
+  localStorage.setItem("monHoc", JSON.stringify(monHocList));
+  hienThi();
+}
+
+hienThi();
+</script>
