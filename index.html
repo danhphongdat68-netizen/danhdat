@@ -1,10 +1,65 @@
 <!DOCTYPE html>
-<html>
+<html lang="vi">
 <head>
-  <title>My PaaS App</title>
+  <meta charset="UTF-8">
+  <title>Quản lý môn học</title>
+  <style>
+    body {
+      font-family: Arial;
+      background: #f4f6f8;
+      padding: 20px;
+    }
+    h1 {
+      text-align: center;
+    }
+    input, button {
+      padding: 8px;
+      margin: 5px;
+    }
+    ul {
+      max-width: 400px;
+      margin: auto;
+      padding: 0;
+    }
+    li {
+      list-style: none;
+      background: white;
+      margin: 5px 0;
+      padding: 10px;
+      display: flex;
+      justify-content: space-between;
+      border-radius: 5px;
+    }
+    button {
+      cursor: pointer;
+    }
+  </style>
 </head>
 <body>
-  <h1>Welcome to PaaS!</h1>
-  <p>This is deployed on Railway.app</p>
+
+<h1>📚 Quản lý môn học</h1>
+
+<div style="text-align:center;">
+  <input type="text" id="monHoc" placeholder="Nhập tên môn học">
+  <button onclick="themMon()">Thêm</button>
+</div>
+
+<ul id="danhSach"></ul>
+
+<script>
+  function themMon() {
+    const ten = document.getElementById("monHoc").value;
+    if (ten === "") return;
+
+    const li = document.createElement("li");
+    li.innerHTML = `
+      ${ten}
+      <button onclick="this.parentElement.remove()">Xóa</button>
+    `;
+    document.getElementById("danhSach").appendChild(li);
+    document.getElementById("monHoc").value = "";
+  }
+</script>
+
 </body>
 </html>
