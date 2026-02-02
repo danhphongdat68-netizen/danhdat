@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Quản lý môn học</title>
+    <style>
+        body { font-family: Arial; padding: 20px; background: #f4f6f8; }
+        h1 { text-align: center; }
+        input, button { padding: 8px; margin: 5px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { border: 1px solid #ccc; padding: 10px; text-align: center; }
+        button { cursor: pointer; }
+    </style>
+</head>
+<body>
+
+<h1>📚 Quản lý môn học</h1>
+
+<input id="mon" placeholder="Tên môn">
+<input id="diem" placeholder="Điểm">
+<button onclick="themMon()">Thêm</button>
+
+<table>
+    <thead>
+        <tr>
+            <th>Môn học</th>
+            <th>Điểm</th>
+            <th>Xóa</th>
+        </tr>
+    </thead>
+    <tbody id="danhsach"></tbody>
+</table>
+
+<script>
+    let data = JSON.parse(localStorage.getItem("monhoc")) || [];
+
+    function hienThi() {
+        let html = "";
+        data.forEach((m, i) => {
+            html += `
+            <tr>
+                <td>${m.mon}</td>
+                <td>${m.diem}</td>
+                <td><button onclick="xoa(${i})">❌</button></td>
+            </tr>`;
+        });
+        document.getElementById("danhsach").innerHTML = html;
+        localStorage.setItem("monhoc", JSON.stringify(data));
+    }
+
+    function themMon() {
+        let mon = document.getElementById("mon").value;
+        let diem = document.getElementById("diem").value;
+        if(mon && diem) {
+            data.push({mon, diem});
+            hienThi();
+        }
+    }
+
+    function xoa(i) {
+        data.splice(i, 1);
+        hienThi();
+    }
+
+    hienThi();
+</script>
+
+</body>
+</html>
