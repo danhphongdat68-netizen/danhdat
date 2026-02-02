@@ -1,14 +1,14 @@
-login.html
-style.css
-script.js
 <!DOCTYPE html>
 <html lang="vi">
 <head>
   <meta charset="UTF-8">
-  <title>Login Form</title>
+  <title>Đăng nhập</title>
+
+  <!-- LINK CSS -->
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+
   <div class="login-box">
     <h2>Đăng nhập</h2>
 
@@ -19,6 +19,7 @@ script.js
     <p id="message"></p>
   </div>
 
+  <!-- LINK JS -->
   <script src="script.js"></script>
 </body>
 </html>
@@ -40,42 +41,25 @@ body {
   text-align: center;
 }
 
-.login-box h2 {
-  margin-bottom: 20px;
-}
-
 .login-box input {
   width: 100%;
   padding: 10px;
   margin: 8px 0;
-  border-radius: 8px;
-  border: 1px solid #ccc;
 }
 
-.login-box button {
+button {
   width: 100%;
   padding: 10px;
-  border: none;
   background: #667eea;
   color: white;
+  border: none;
   border-radius: 8px;
-  cursor: pointer;
-}
-
-.login-box button:hover {
-  background: #5a67d8;
-}
-
-#message {
-  margin-top: 10px;
-  font-weight: bold;
 }
 function login() {
   const user = document.getElementById("username").value;
   const pass = document.getElementById("password").value;
   const message = document.getElementById("message");
 
-  // tài khoản giả lập
   const correctUser = "admin";
   const correctPass = "123456";
 
@@ -87,3 +71,9 @@ function login() {
     message.innerText = "Sai tài khoản hoặc mật khẩu!";
   }
 }
+login-form
+├── index.html
+├── style.css
+└── script.js
+
+
