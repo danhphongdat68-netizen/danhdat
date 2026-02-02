@@ -1,108 +1,89 @@
-// Lưu
-localStorage.setItem("monHoc", JSON.stringify(monHocList));
+login.html
+style.css
+script.js
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Login Form</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="login-box">
+    <h2>Đăng nhập</h2>
 
-// Lấy ra
-let monHocList = JSON.parse(localStorage.getItem("monHoc")) || [];
-let monHocList = [
-  { ten: "Toán" },
-  { ten: "Ngữ văn" },
-  { ten: "Tiếng Anh" }
-];
-function themMon() {
-  const ten = document.getElementById("monHoc").value.trim();
-  if (ten === "") return;
+    <input type="text" id="username" placeholder="Tên đăng nhập">
+    <input type="password" id="password" placeholder="Mật khẩu">
 
-  monHocList.push({ ten: ten });
-  luuVaHienThi();
-}
-function suaMon(index) {
-  const tenMoi = prompt("Nhập tên môn mới:", monHocList[index].ten);
-  if (tenMoi) {
-    monHocList[index].ten = tenMoi;
-    luuVaHienThi();
-  }
-}
-function luuVaHienThi() {
-  localStorage.setItem("monHoc", JSON.stringify(monHocList));
-  hienThi();
-}
+    <button onclick="login()">Đăng nhập</button>
+    <p id="message"></p>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
 body {
-  font-family: Arial;
-  background: linear-gradient(120deg, #74ebd5, #acb6e5);
-  min-height: 100vh;
-}
-.container {
-  background: white;
-  max-width: 500px;
-  margin: 50px auto;
-  padding: 20px;
-  border-radius: 10px;
-}
-li {
+  height: 100vh;
+  background: linear-gradient(135deg, #667eea, #764ba2);
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
+  align-items: center;
+  font-family: Arial;
+}
+
+.login-box {
+  background: white;
+  padding: 30px;
+  width: 300px;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+  text-align: center;
+}
+
+.login-box h2 {
+  margin-bottom: 20px;
+}
+
+.login-box input {
+  width: 100%;
+  padding: 10px;
   margin: 8px 0;
+  border-radius: 8px;
+  border: 1px solid #ccc;
 }
-button {
+
+.login-box button {
+  width: 100%;
+  padding: 10px;
   border: none;
-  padding: 5px 10px;
-  border-radius: 5px;
-}
-<div class="container">
-  <h2>📚 Quản lý môn học</h2>
-  <input id="monHoc" placeholder="Nhập tên môn">
-  <button onclick="themMon()">Thêm</button>
-  <ul id="list"></ul>
-</div>
-
-<script>
-let monHocList = JSON.parse(localStorage.getItem("monHoc")) || [
-  { ten: "Toán" },
-  { ten: "Ngữ văn" },
-  { ten: "Tiếng Anh" }
-];
-
-function hienThi() {
-  const ul = document.getElementById("list");
-  ul.innerHTML = "";
-  monHocList.forEach((m, i) => {
-    ul.innerHTML += `
-      <li>
-        ${m.ten}
-        <span>
-          <button onclick="suaMon(${i})">Sửa</button>
-          <button onclick="xoaMon(${i})">Xóa</button>
-        </span>
-      </li>
-    `;
-  });
+  background: #667eea;
+  color: white;
+  border-radius: 8px;
+  cursor: pointer;
 }
 
-function themMon() {
-  const ten = document.getElementById("monHoc").value.trim();
-  if (!ten) return;
-  monHocList.push({ ten });
-  document.getElementById("monHoc").value = "";
-  luuVaHienThi();
+.login-box button:hover {
+  background: #5a67d8;
 }
 
-function xoaMon(i) {
-  monHocList.splice(i, 1);
-  luuVaHienThi();
+#message {
+  margin-top: 10px;
+  font-weight: bold;
 }
+function login() {
+  const user = document.getElementById("username").value;
+  const pass = document.getElementById("password").value;
+  const message = document.getElementById("message");
 
-function suaMon(i) {
-  const moi = prompt("Tên môn mới:", monHocList[i].ten);
-  if (moi) {
-    monHocList[i].ten = moi;
-    luuVaHienThi();
+  // tài khoản giả lập
+  const correctUser = "admin";
+  const correctPass = "123456";
+
+  if (user === correctUser && pass === correctPass) {
+    message.style.color = "green";
+    message.innerText = "Đăng nhập thành công!";
+  } else {
+    message.style.color = "red";
+    message.innerText = "Sai tài khoản hoặc mật khẩu!";
   }
 }
-
-function luuVaHienThi() {
-  localStorage.setItem("monHoc", JSON.stringify(monHocList));
-  hienThi();
-}
-
-hienThi();
-</script>
